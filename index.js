@@ -19,7 +19,7 @@ const port = 3000;
 
 
 const mailgun = new Mailgun(formData);
-const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || 'd330c1dd11a4456637167d8f91544fe5-f68a26c9-e96bcdd3'});
+const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY});
 async function sendMail(to, subject, resetURL) {
     try {
         const htmlContent = `<p>Please click on the following link to reset your password: <a href='${resetURL}'>${resetURL}</a></p>`;
