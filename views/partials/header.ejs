@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Management Portal</title>
+    <link rel="icon" href="images/icon/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/header/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">Production Management</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>All orders</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#nice" aria-expanded="false" aria-controls="nice">
+                        <i class="lni lni-protection"></i>
+                        <span>Nice Orders</span>
+                    </a>
+                    <ul id="nice" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">All orders</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">New orders</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Pending orders</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#gds" aria-expanded="false" aria-controls="gds">
+                        <i class="lni lni-protection"></i>
+                        <span>GDS Orders</span>
+                    </a>
+                    <ul id="gds" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">All orders</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">New orders</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Pending orders</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                        <i class="lni lni-layout"></i>
+                        <span>Multi Level</span>
+                    </a>
+                    <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                Two Links
+                            </a>
+                            <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li> -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-popup"></i>
+                        <span>Notification</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-cog"></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
+                <div class="sidebar-item">
+                    <a href="/logout" class="sidebar-link">
+                        <i class="lni lni-exit"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </ul>
+            
+        </aside>
+        <div class="main">
+            <nav class="navbar navbar-expand px-4 py-3">
+                <form action="#" class="d-none d-sm-inline-block">
+
+                </form>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav mx-auto d-flex justify-content-between align-items-center w-100">
+                    
+                        <li><h2 class="fw-bold fs-2">Hello, <%= user ? user.userFirstName : 'Guest' %></h2></li>
+                        <% var date = new Date() %>
+                        <!-- <li style="box-shadow: 0px -2px 10px #000; background-color: white; border-radius: 15px;"><p class="fw-bold p-2 fs-5" >Today <%= date.getDate() %>/<%= date.getMonth() %>/<%= date.getFullYear() %></p></li> -->
+                        <li class="nav-item dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <img src="images/avatar/avatar.jpg" class="avatar img-fluid" alt="">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end rounded">
+                                <ul class="list-unstyled p-1">
+                                    <li class="p-1">Settings</li>
+                                    <li class="p-1">Update</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-4">
+                <div class="container-fluid">
+                    
+                    <div class="mb-3">
+                        
+                        <h3 class="fw-bold fs-4 mb-3">GDS+Nice Dashboard</h3>
+                        <div class="row">
+                            <div class="col-12 col-md-4 ">
+                                <a href="#" class="card border-0">
+                                    <div class="card-body py-4">
+                                        <h5 class="mb-2 fw-bold">
+                                            All Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            <%= orders.length %>
+                                        </p>
+                                        <div class="mb-0">
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class=" fw-bold">
+                                                Since Last Week
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-4 ">
+                                <a href="dashboard" class="card  border-0">
+                                    <div class="card-body py-4">
+                                        <h5 class="mb-2 fw-bold">
+                                            New Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            Coming soon
+                                        </p>
+                                        <div class="mb-0">
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class="fw-bold">
+                                                Since Last Week
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-4 ">
+                                <a href="/dashboard" class="card border-0">
+                                    <div class="card-body py-4">
+                                        <h5 class="mb-2 fw-bold">
+                                            Pending Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            Coming Soon
+                                        </p>
+                                        <div class="mb-0">
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class="fw-bold">
+                                                Since Last Week
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold fs-4 my-3">Orders Due Today
+                        </h3>
+                        <div class="row">
+                            <div class="col-12">
+                                
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="highlight">
+                                            <th scope="col">
+                                                <div class="mb-3">
+                                                    <label for="orderFilter">Sales Order:</label>
+                                                    <input type="text" id="orderFilter" class="form-control" placeholder="Enter sales order">
+                                                </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="mb-3">
+                                                    <label for="customerNameFilter">Filter by Sales Order:</label>
+                                                    <input type="text" id="customerNameFilter" class="form-control" placeholder="Enter customer name">
+                                                </div>
+                                            </th>
+                                            <th scope="col"></th>
+                                            <th scope="col">
+                                                <div class="filter-by-status mb-3">
+                                                    <label for="statusFilter">Filter by Status:</label>
+                                                    <select id="statusFilter" class="form-select">
+                                                        <option value="All">All</option>
+                                                        <option value="In progress">In progress</option>
+                                                        <option value="On hold">On hold</option>
+                                                        <option value="Completed">Completed</option>
+                                                        <option value="Waiting on parts">Waiting on parts</option>
+                                                    </select>
+                                                </div>
+                                            </th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <thead>
+                                        <tr class="highlight">
+                                            <th scope="col">Sales order</th>
+                                            <th scope="col">Customer Name</th>
+                                            <th scope="col">Dispatch Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Notes</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% orders.sort(function(a, b) {
+                                            return a.dispatchDate - b.dispatchDate;
+                                        }).forEach(function(order, index) { %>
+                                            <tr>
+                                                <th scope="row" class="order-id"><a href="#"><u><%= order.orderId %></u></a></th>
+                                                <td class="customer-name"><%= order.customerName %></td>
+                                                <td><%= order.dispatchDate.getDate() %>/<%= order.dispatchDate.getMonth() %>/<%= order.dispatchDate.getFullYear() %></td>
+                                                <td class="order-status"><%= order.orderStatus %></td>
+                                                <td style="position: relative;">
+                                                    <span class="full-text hidden"><%= order.orderNotes %></span>
+                                                    <a href="#" class="toggle-text">Read more</a>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#note<%= index %>" aria-expanded="false" aria-controls="note<%= index %>">
+                                                        <i class="lni lni-write"></i> Update
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <!-- Notes and Parts Row -->
+                                            <tr id="note<%= index %>" class="collapse" >
+                                                <td colspan="6" style="background-color: lightblue;">
+                                                    <form action="/updateOrder" method="post">
+                                                        <input type="hidden" name="orderId" value="<%= order.orderId %>">
+                                                        <div class="container-fluid">
+                                                            
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-4">
+                                                                    <p>Comments</p>
+                                                                    <textarea class="form-control" name="comments" rows="3"><%= order.orderNotes %></textarea>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p>Status</p>
+                                                                    <select class="form-select" name="status" aria-label="Default select example">
+                                                                        <option value="In progress" <%= order.orderStatus == 'In progress' ? 'selected' : '' %>>In progress</option>
+                                                                        <option value="On hold" <%= order.orderStatus == 'On hold' ? 'selected' : '' %>>On hold</option>
+                                                                        <option value="Completed" <%= order.orderStatus == 'Completed' ? 'selected' : '' %>>Completed</option>
+                                                                        <option value="Waiting on parts" <%= order.orderStatus == 'Waiting on parts' ? 'selected' : '' %>>Waiting on parts</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p>Dispatch Date</p>
+                                                                    <input disabled type="date" class="form-control" value="<%= order.dispatchDate %>">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="text-end">
+                                                                <button class="btn btn-primary">Submit Update</button>
+                                                            </div>
+                                                            
+                                                            <table class="table table-striped mb-3">
+                                                                <thead>
+                                                                    <tr class="highlight">
+                                                                        <th scope="col">Part Number</th>
+                                                                        <th scope="col">Description</th>
+                                                                        <th scope="col">Quantity</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% order.orderItems.forEach(function(item) { %>
+                                                                        <tr>
+                                                                            <th scope="row"><%= item.partNumber %></th>
+                                                                            <td><%= item.description %></td>
+                                                                            <td><%= item.quantity %></td>
+                                                                        </tr>
+                                                                    <% }); %>
+                                                                    <!-- Add more parts as needed -->
+                                                                </tbody>
+                                                            </table>
+                                                            
+                                                        </div>
+                                                    </form>    
+                                                </td>
+                                            </tr>
+                                            <!-- Repeat for other orders -->
+                                        <% }); %>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-body-secondary">
+                        <div class="col-6 text-start ">
+                            <a class="text-body-secondary" href=" #">
+                                <strong>Nice Australia</strong>
+                            </a>
+                        </div>
+                        <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">Contact IT</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">Report</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">Privacy Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="javascripts/header/header.js"></script>
+    <script>
+        document.querySelectorAll('.toggle-text').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor behavior
+        var td = this.parentElement; // Get the parent <td> of the clicked link
+        var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
+        
+        // Toggle the hidden class to show/hide the full text
+        if (fullText.classList.contains('hidden')) {
+            fullText.classList.remove('hidden');
+            this.textContent = 'Read less'; // Change link text
+        } else {
+            fullText.classList.add('hidden');
+            this.textContent = 'Read more'; // Change link text back
+        }
+    });
+});
+    </script>
+    <script>
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            var selectedStatus = this.value;
+            document.querySelectorAll('tbody tr').forEach(function(row) {
+                // Safely try to find the status using the class
+                var statusElement = row.querySelector('.order-status');
+                if (statusElement) { // Check if the element exists
+                    var status = statusElement.textContent.trim();
+                    if (selectedStatus === 'All' || status === selectedStatus) {
+                        row.style.display = ''; // Show row
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('#customerNameFilter').on('input', function() {
+                var filterValue = $(this).val().trim().toLowerCase();
+
+                $('tbody tr:nth-child(odd)').each(function() {
+                    var customerName = $(this).find('.customer-name').text().trim().toLowerCase();
+
+                    if (!filterValue || customerName.includes(filterValue)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+            $('#orderFilter').on('input', function() {
+                var filterValue = $(this).val().trim().toLowerCase();
+
+                $('tbody tr:nth-child(odd)').each(function() {
+                    var orderName = $(this).find('.order-id').text().trim().toLowerCase();
+
+                    if (!filterValue || orderName.includes(filterValue)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+        
+        </script>
+</body>
+
+</html>

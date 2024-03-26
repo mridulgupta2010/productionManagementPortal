@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="stylesheets/upload/upload.css">
+<body>
+    <div id="main">
+        <form id="uploadForm" action="/upload-csv" method="post" enctype="multipart/form-data">
+            <div class="drag-image">
+                <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <h6>Drag & Drop File Here</h6>
+                <span>OR</span>
+                <button type="button" onclick="document.querySelector('.drag-image input').click()">Browse File</button>
+                <% if(locals.message && locals.tip) {%>
+                    <p id="error" style="color: red; font-size: 11px; text-align: center;"> <%= message ? message : '' %> <br> Tip: <%= tip ? tip : '' %></p>
+                    
+                    <% } %>
+                <input type="file" name="csvfile" hidden>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="javascrips/upload/upload.js"></script>
+</body>
+</html>
