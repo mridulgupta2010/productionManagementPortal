@@ -277,7 +277,7 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="tb-parent">
                                         <% orders.sort(function(a, b) {
                                             return a.dispatchDate - b.dispatchDate;
                                         }).forEach(function(order, index) { %>
@@ -297,7 +297,7 @@
                                                 </td>
                                             </tr>
                                             <!-- Notes and Parts Row -->
-                                            <tr id="note<%= index %>" class="collapse" >
+                                            <tr id="note<%= index %>" class="collapse note-section" >
                                                 <td colspan="6" style="background-color: lightblue;">
                                                     <form action="/updateOrder" method="post">
                                                         <input type="hidden" name="orderId" value="<%= order.orderId %>">
@@ -412,7 +412,7 @@
     <script>
         document.getElementById('statusFilter').addEventListener('change', function() {
             var selectedStatus = this.value;
-            document.querySelectorAll('tbody tr').forEach(function(row) {
+            document.querySelectorAll('.tb-parent > tr').forEach(function(row) {
                 // Safely try to find the status using the class
                 var statusElement = row.querySelector('.order-status');
                 if (statusElement) { // Check if the element exists
@@ -429,7 +429,7 @@
             $('#customerNameFilter').on('input', function() {
                 var filterValue = $(this).val().trim().toLowerCase();
 
-                $('tbody tr:nth-child(odd)').each(function() {
+                $('.tb-parent > tr:nth-child(odd)').each(function() {
                     var customerName = $(this).find('.customer-name').text().trim().toLowerCase();
 
                     if (!filterValue || customerName.includes(filterValue)) {
@@ -442,7 +442,7 @@
             $('#orderFilter').on('input', function() {
                 var filterValue = $(this).val().trim().toLowerCase();
 
-                $('tbody tr:nth-child(odd)').each(function() {
+                $('.tb-parent > tr:nth-child(odd)').each(function() {
                     var orderName = $(this).find('.order-id').text().trim().toLowerCase();
 
                     if (!filterValue || orderName.includes(filterValue)) {

@@ -136,9 +136,8 @@ app.get("/upload", function (req, res) {
 
 app.post('/upload-csv', upload.single('csvfile'), async (req, res) => {
     const session = await mongoose.startSession();
-    session.startTransaction();
-
     try {
+        session.startTransaction();
         const filePath = req.file.path;
         const groupedItems = {};
         const csvOrderIds = new Set();
@@ -152,11 +151,9 @@ app.post('/upload-csv', upload.single('csvfile'), async (req, res) => {
 
                     if (!groupedItems[orderId]) {
                         groupedItems[orderId] = {
-                            customerName: data.CustName,
+                            customerName: data.CustName, // Keep for new orders
                             dispatchDate: new Date(data.DlvDate1),
-                            orderItems: [],
-                            orderStatus: "In progress",
-                            orderNotes: "Empty Note"
+                            orderItems: []
                         };
                     }
 
@@ -169,30 +166,42 @@ app.post('/upload-csv', upload.single('csvfile'), async (req, res) => {
                 .on('error', (error) => reject(error));
         });
 
-        const existingOrderIds = await Order.find({}).session(session).then(orders => orders.map(order => order.orderId));
-        const ordersToDelete = existingOrderIds.filter(id => !csvOrderIds.has(id));
-        if (ordersToDelete.length > 0) {
+        // Retrieve all orders for comparison
+        const existingOrders = await Order.find({ orderId: { $in: Array.from(csvOrderIds) } }).session(session);
+
+        for (const orderId of Object.keys(groupedItems)) {
+            const { dispatchDate, orderItems } = groupedItems[orderId];
+            const existingOrder = existingOrders.find(order => order.orderId === orderId);
+
+            if (existingOrder) {
+                // Update existing order - only dispatchDate and orderItems
+                await Order.updateOne({ orderId }, {
+                    $set: { dispatchDate, orderItems }
+                }, { session });
+            } else {
+                // Insert new order - use full details from groupedItems
+                const newOrderData = groupedItems[orderId];
+                const newOrder = new Order({ ...newOrderData, orderId });
+                await newOrder.save({ session });
+            }
+        }
+
+        // Delete orders not present in the new CSV
+        const ordersToDelete = existingOrders
+            .filter(order => !csvOrderIds.has(order.orderId))
+            .map(order => order.orderId);
+        if (ordersToDelete.length) {
             await Order.deleteMany({ orderId: { $in: ordersToDelete } }).session(session);
         }
 
-        for (let orderId of Object.keys(groupedItems)) {
-            const orderData = groupedItems[orderId];
-            await Order.updateOne(
-                { orderId },
-                { $set: orderData },
-                { upsert: true, session }
-            );
-        }
-
         await session.commitTransaction();
-        session.endSession();
         res.redirect("/dashboard");
-        fs.unlinkSync(filePath); // Clean up the uploaded CSV file
     } catch (err) {
-        await session.abortTransaction();
-        session.endSession();
         console.error("Error during file upload and processing:", err);
-        res.render("upload", {message: "File upload failed!", tip: "Please check your date format and ensure data is correct."});
+        res.render("upload", { message: "File upload failed!", tip: "Please check your date format and ensure data is correct." });
+    } finally {
+        session.endSession();
+        fs.unlinkSync(req.file.path); // Ensure file is deleted even if there's an error
     }
 });
 
