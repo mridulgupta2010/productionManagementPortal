@@ -27,7 +27,7 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/dahsboard" class="sidebar-link">
+                    <a href="/dashboard" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Dashboard</span>
                     </a>
@@ -211,7 +211,7 @@
                                 </a>
                             </div>
                         </div>
-                        <h3 class="fw-bold fs-4 my-3">Orders Due Today
+                        <h3 class="fw-bold fs-4 my-3">Orders Due
                         </h3>
                         <div class="row">
                             <div class="col-12">
@@ -284,7 +284,7 @@
                                             <tr>
                                                 <th scope="row" class="order-id"><a href="#"><u><%= order.orderId %></u></a></th>
                                                 <td class="customer-name"><%= order.customerName %></td>
-                                                <td><%= order.dispatchDate.getDate() %>/<%= order.dispatchDate.getMonth() %>/<%= order.dispatchDate.getFullYear() %></td>
+                                                <td><%= order.dispatchDate.getDate() %>/<%= order.dispatchDate.getMonth()+1 %>/<%= order.dispatchDate.getFullYear() %></td>
                                                 <td class="order-status"><%= order.orderStatus %></td>
                                                 <td style="position: relative;">
                                                     <span class="full-text hidden"><%= order.orderNotes %></span>
