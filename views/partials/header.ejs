@@ -291,7 +291,8 @@
                                                     <a href="#" class="toggle-text">Read more</a>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#note<%= index %>" aria-expanded="false" aria-controls="note<%= index %>">
+                                                    <button class="btn btn-secondary update-button" type="button" data-bs-toggle="collapse" 
+                                                            data-bs-target="#note<%= index %>" aria-expanded="false" aria-controls="note<%= index %>">
                                                         <i class="lni lni-write"></i> Update
                                                     </button>
                                                 </td>
@@ -390,71 +391,109 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="javascripts/header/header.js"></script>
-    <script>
-        document.querySelectorAll('.toggle-text').forEach(function(link) {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default anchor behavior
-        var td = this.parentElement; // Get the parent <td> of the clicked link
-        var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
-        
-        // Toggle the hidden class to show/hide the full text
-        if (fullText.classList.contains('hidden')) {
-            fullText.classList.remove('hidden');
-            this.textContent = 'Read less'; // Change link text
-        } else {
-            fullText.classList.add('hidden');
-            this.textContent = 'Read more'; // Change link text back
+<script src="javascripts/header/header.js"></script>
+<script>
+    function collapseOtherRows(currentRowId) {
+        document.querySelectorAll('.note-section.collapse.show').forEach(function(row) {
+            if (row.id !== currentRowId) {
+                // Collapse the row if it's not the current one
+                new bootstrap.Collapse(row, {
+                    toggle: false
+                }).hide();
+            }
+        });
+    }
+
+    // Add event listener to each update button
+    document.querySelectorAll('.update-button').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            var target = this.getAttribute('data-bs-target').substring(1); // Get the target row id
+            collapseOtherRows(target); // Collapse other rows
+
+            // Directly toggle the target row to minimize lag
+            var targetRow = document.getElementById(target);
+            new bootstrap.Collapse(targetRow, {
+                toggle: true
+            });
+        });
+    });
+
+    // Handle clicks outside the notes and parts rows
+    document.addEventListener('click', function(event) {
+        // Check if the click is outside the expanded "Notes and Parts" row
+        if (!event.target.closest('.note-section') && !event.target.closest('.update-button')) {
+            document.querySelectorAll('.note-section.collapse.show').forEach(function(row) {
+                // Collapse the row if a click happens outside
+                new bootstrap.Collapse(row, {
+                    toggle: false
+                }).hide();
+            });
         }
     });
-});
-    </script>
-    <script>
-        document.getElementById('statusFilter').addEventListener('change', function() {
-            var selectedStatus = this.value;
-            document.querySelectorAll('.tb-parent > tr').forEach(function(row) {
-                // Safely try to find the status using the class
-                var statusElement = row.querySelector('.order-status');
-                if (statusElement) { // Check if the element exists
-                    var status = statusElement.textContent.trim();
-                    if (selectedStatus === 'All' || status === selectedStatus) {
-                        row.style.display = ''; // Show row
-                    } else {
-                        row.style.display = 'none'; // Hide row
-                    }
+
+    document.querySelectorAll('.toggle-text').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+            var td = this.parentElement; // Get the parent <td> of the clicked link
+            var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
+            
+            // Toggle the hidden class to show/hide the full text
+            if (fullText.classList.contains('hidden')) {
+                fullText.classList.remove('hidden');
+                this.textContent = 'Read less'; // Change link text
+            } else {
+                fullText.classList.add('hidden');
+                this.textContent = 'Read more'; // Change link text back
+            }
+        });
+    });
+
+    document.getElementById('statusFilter').addEventListener('change', function() {
+        var selectedStatus = this.value;
+        document.querySelectorAll('.tb-parent > tr').forEach(function(row) {
+            // Safely try to find the status using the class
+            var statusElement = row.querySelector('.order-status');
+            if (statusElement) { // Check if the element exists
+                var status = statusElement.textContent.trim();
+                if (selectedStatus === 'All' || status === selectedStatus) {
+                    row.style.display = ''; // Show row
+                } else {
+                    row.style.display = 'none'; // Hide row
+                }
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#customerNameFilter').on('input', function() {
+            var filterValue = $(this).val().trim().toLowerCase();
+
+            $('.tb-parent > tr:nth-child(odd)').each(function() {
+                var customerName = $(this).find('.customer-name').text().trim().toLowerCase();
+
+                if (!filterValue || customerName.includes(filterValue)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
                 }
             });
         });
-        $(document).ready(function() {
-            $('#customerNameFilter').on('input', function() {
-                var filterValue = $(this).val().trim().toLowerCase();
 
-                $('.tb-parent > tr:nth-child(odd)').each(function() {
-                    var customerName = $(this).find('.customer-name').text().trim().toLowerCase();
+        $('#orderFilter').on('input', function() {
+            var filterValue = $(this).val().trim().toLowerCase();
 
-                    if (!filterValue || customerName.includes(filterValue)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            });
-            $('#orderFilter').on('input', function() {
-                var filterValue = $(this).val().trim().toLowerCase();
+            $('.tb-parent > tr:nth-child(odd)').each(function() {
+                var orderName = $(this).find('.order-id').text().trim().toLowerCase();
 
-                $('.tb-parent > tr:nth-child(odd)').each(function() {
-                    var orderName = $(this).find('.order-id').text().trim().toLowerCase();
-
-                    if (!filterValue || orderName.includes(filterValue)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
+                if (!filterValue || orderName.includes(filterValue)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
             });
         });
-        
-        </script>
+    });
+</script>
 </body>
 
 </html>

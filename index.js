@@ -187,9 +187,11 @@ app.post('/upload-csv', upload.single('csvfile'), async (req, res) => {
         }
 
         // Delete orders not present in the new CSV
-        const ordersToDelete = existingOrders
+        const allOrders = await Order.find({});
+        const ordersToDelete = allOrders
             .filter(order => !csvOrderIds.has(order.orderId))
             .map(order => order.orderId);
+
         if (ordersToDelete.length) {
             await Order.deleteMany({ orderId: { $in: ordersToDelete } }).session(session);
         }
@@ -201,7 +203,7 @@ app.post('/upload-csv', upload.single('csvfile'), async (req, res) => {
         res.render("upload", { message: "File upload failed!", tip: "Please check your date format and ensure data is correct." });
     } finally {
         session.endSession();
-        fs.unlinkSync(req.file.path); // Ensure file is deleted even if there's an error
+        fs.unlinkSync(req.file.path); // Ensure file is deleted even if there's an error.
     }
 });
 
