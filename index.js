@@ -47,7 +47,7 @@ app.use(session({
     saveUninitialized: false,
     store: mongoStore.create({
         mongoUrl: process.env.DB_URL,
-        ttl: 15 * 10
+        ttl: 4 * 60 * 60
     })
 }));
 
