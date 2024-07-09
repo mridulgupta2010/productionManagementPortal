@@ -74,6 +74,29 @@
                         </li>
                     </ul>
                 </li>
+                <!-- <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                        <i class="lni lni-layout"></i>
+                        <span>Multi Level</span>
+                    </a>
+                    <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                Two Links
+                            </a>
+                            <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li> -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="lni lni-popup"></i>
@@ -93,15 +116,19 @@
                     </a>
                 </div>
             </ul>
+            
         </aside>
         <div class="main">
             <nav class="navbar navbar-expand px-4 py-3">
                 <form action="#" class="d-none d-sm-inline-block">
+
                 </form>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mx-auto d-flex justify-content-between align-items-center w-100">
+                    
                         <li><h2 class="fw-bold fs-2">Hello, <%= user ? user.userFirstName : 'Guest' %></h2></li>
                         <% var date = new Date() %>
+                        <!-- <li style="box-shadow: 0px -2px 10px #000; background-color: white; border-radius: 15px;"><p class="fw-bold p-2 fs-5" >Today <%= date.getDate() %>/<%= date.getMonth() %>/<%= date.getFullYear() %></p></li> -->
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
                                 <img src="images/avatar/avatar.jpg" class="avatar img-fluid" alt="">
@@ -118,29 +145,47 @@
             </nav>
             <main class="content px-3 py-4">
                 <div class="container-fluid">
+                    
                     <div class="mb-3">
+                        
                         <h3 class="fw-bold fs-4 mb-3">GDS+Nice Dashboard</h3>
                         <div class="row">
                             <div class="col-12 col-md-4 ">
                                 <a href="#" class="card border-0">
                                     <div class="card-body py-4">
-                                        <h5 class="mb-2 fw-bold">All Orders</h5>
-                                        <p class="px-2 mb-2 fw-bold"><%= orders.length %></p>
+                                        <h5 class="mb-2 fw-bold">
+                                            All Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            <%= orders.length %>
+                                        </p>
                                         <div class="mb-0">
-                                            <span class="badge text-success me-2">0%</span>
-                                            <span class="fw-bold">Since Last Week</span>
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class=" fw-bold">
+                                                Since Last Week
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="col-12 col-md-4 ">
-                                <a href="dashboard" class="card border-0">
+                                <a href="dashboard" class="card  border-0">
                                     <div class="card-body py-4">
-                                        <h5 class="mb-2 fw-bold">New Orders</h5>
-                                        <p class="px-2 mb-2 fw-bold">Coming soon</p>
+                                        <h5 class="mb-2 fw-bold">
+                                            New Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            Coming soon
+                                        </p>
                                         <div class="mb-0">
-                                            <span class="badge text-success me-2">0%</span>
-                                            <span class="fw-bold">Since Last Week</span>
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class="fw-bold">
+                                                Since Last Week
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
@@ -148,19 +193,29 @@
                             <div class="col-12 col-md-4 ">
                                 <a href="/dashboard" class="card border-0">
                                     <div class="card-body py-4">
-                                        <h5 class="mb-2 fw-bold">Pending Orders</h5>
-                                        <p class="px-2 mb-2 fw-bold">Coming Soon</p>
+                                        <h5 class="mb-2 fw-bold">
+                                            Pending Orders
+                                        </h5>
+                                        <p class="px-2 mb-2 fw-bold">
+                                            Coming Soon
+                                        </p>
                                         <div class="mb-0">
-                                            <span class="badge text-success me-2">0%</span>
-                                            <span class="fw-bold">Since Last Week</span>
+                                            <span class="badge text-success me-2">
+                                                0%
+                                            </span>
+                                            <span class="fw-bold">
+                                                Since Last Week
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <h3 class="fw-bold fs-4 my-3">Orders Due</h3>
+                        <h3 class="fw-bold fs-4 my-3">Orders Due
+                        </h3>
                         <div class="row">
                             <div class="col-12">
+                                
                                 <table class="table table-striped">
                                     <thead>
                                         <tr class="highlight">
@@ -248,6 +303,7 @@
                                                     <form action="/updateOrder" method="post">
                                                         <input type="hidden" name="orderId" value="<%= order.orderId %>">
                                                         <div class="container-fluid">
+                                                            
                                                             <div class="row mb-3">
                                                                 <div class="col-md-4">
                                                                     <p>Comments</p>
@@ -267,9 +323,11 @@
                                                                     <input disabled type="date" class="form-control" value="<%= order.dispatchDate %>">
                                                                 </div>
                                                             </div>
+                                                            
                                                             <div class="text-end">
                                                                 <button class="btn btn-primary">Submit Update</button>
                                                             </div>
+                                                            
                                                             <table class="table table-striped mb-3">
                                                                 <thead>
                                                                     <tr class="highlight">
@@ -289,12 +347,14 @@
                                                                     <!-- Add more parts as needed -->
                                                                 </tbody>
                                                             </table>
+                                                            
                                                         </div>
                                                     </form>    
                                                 </td>
                                             </tr>
                                             <!-- Repeat for other orders -->
                                         <% }); %>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -305,8 +365,8 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-body-secondary">
-                        <div class="col-6 text-start">
-                            <a class="text-body-secondary" href="#">
+                        <div class="col-6 text-start ">
+                            <a class="text-body-secondary" href=" #">
                                 <strong>Nice Australia</strong>
                             </a>
                         </div>
@@ -331,89 +391,77 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="javascripts/header/header.js"></script>
-    <script>
-        // Function to handle the collapse of other rows
-    function collapseOtherRows(currentRowId) {
-        document.querySelectorAll('.note-section.collapse.show').forEach(function(row) {
-            if (row.id !== currentRowId) {
-                // Collapse the row if it's not the current one
-                new bootstrap.Collapse(row, {
-                    toggle: false
-                }).hide();
+<script src="javascripts/header/header.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all collapse components manually
+    var allCollapses = document.querySelectorAll('.note-section');
+    allCollapses.forEach(collapse => {
+        new bootstrap.Collapse(collapse, {
+            toggle: false // Ensure all collapses are initialized but not toggled
+        });
+    });
+
+    // Function to toggle a specific row and close others
+    function toggleRow(targetRowId) {
+        const targetRow = document.getElementById(targetRowId);
+        let isShown = targetRow.classList.contains('show');
+
+        // Hide all rows first
+        allCollapses.forEach(row => {
+            if (row.id !== targetRowId && row.classList.contains('show')) {
+                new bootstrap.Collapse(row, { toggle: false }).hide();
             }
         });
+
+        // Then toggle the target row
+        const bsCollapse = new bootstrap.Collapse(targetRow, { toggle: false });
+        if (isShown) {
+            bsCollapse.hide();
+        } else {
+            bsCollapse.show();
+        }
     }
 
-    // Add event listener to each update button
+    // Event listeners for the update buttons
     document.querySelectorAll('.update-button').forEach(function(button) {
         button.addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevent event from bubbling up to the document
-            var target = this.getAttribute('data-bs-target').substring(1); // Get the target row id
-            collapseOtherRows(target); // Collapse other rows
-
-            // Directly toggle the target row to minimize lag
-            var targetRow = document.getElementById(target);
-            new bootstrap.Collapse(targetRow, {
-                toggle: true
-            });
-        });
-    });
-
-    // Function to hide all expanded full texts
-    function hideAllFullTexts(exceptElement) {
-        document.querySelectorAll('.full-text').forEach(function(fullText) {
-            if (fullText !== exceptElement && !fullText.classList.contains('hidden')) {
-                fullText.classList.add('hidden');
-                fullText.nextElementSibling.textContent = 'Read more'; // Change link text back
-            }
-        });
-    }
-
-    // Handle hover events on the "Read more" link
-    document.querySelectorAll('.toggle-text').forEach(function(link) {
-        link.addEventListener('mouseover', function(event) {
-            event.preventDefault(); // Prevent the default anchor behavior
-            var td = this.parentElement; // Get the parent <td> of the hovered link
-            var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
+            event.stopPropagation(); // Stop propagation to handle clicks on this element only
+            let targetRowId = this.getAttribute('data-bs-target').substring(1); // Get the row ID
+            toggleRow(targetRowId);
             
-            // Hide all other expanded full texts
-            hideAllFullTexts(fullText);
-
-            // Show the full text
-            if (fullText.classList.contains('hidden')) {
-                fullText.classList.remove('hidden');
-                this.textContent = 'Read less'; // Change link text
-            }
-        });
-
-        link.addEventListener('mouseout', function(event) {
-            var td = this.parentElement; // Get the parent <td> of the hovered link
-            var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
-
-            // Hide the full text on mouse out
-            if (!fullText.classList.contains('hidden')) {
-                fullText.classList.add('hidden');
-                this.textContent = 'Read more'; // Change link text back
-            }
         });
     });
 
-    // Handle clicks outside the notes and parts rows
+    // Global click to close any open collapse if clicking outside
     document.addEventListener('click', function(event) {
-        // Check if the click is outside the expanded "Notes and Parts" row
-        if (!event.target.closest('.note-section') && !event.target.closest('.update-button') && !event.target.closest('.full-text') && !event.target.closest('.toggle-text')) {
-            document.querySelectorAll('.note-section.collapse.show').forEach(function(row) {
-                // Collapse the row if a click happens outside
-                new bootstrap.Collapse(row, {
-                    toggle: false
-                }).hide();
+        if (!event.target.closest('.note-section') && !event.target.closest('.update-button')) {
+            allCollapses.forEach(row => {
+                if (row.classList.contains('show')) {
+                    new bootstrap.Collapse(row, { toggle: false }).hide();
+                }
             });
-
-            // Hide all expanded text
-            hideAllFullTexts(null);
         }
     });
+});
+
+document.querySelectorAll('.toggle-text').forEach(function(link) {
+    // Hover to show full text
+    link.addEventListener('mouseenter', function(event) {
+        var td = this.parentElement; // Get the parent <td> of the hovered link
+        var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
+        fullText.classList.remove('hidden'); // Show the full text
+        this.textContent = 'Read less'; // Change link text
+    });
+
+    // Leave hover to hide full text
+    link.addEventListener('mouseleave', function(event) {
+        var td = this.parentElement; // Get the parent <td> of the hovered link
+        var fullText = td.querySelector('.full-text'); // Find the .full-text span within this <td>
+        fullText.classList.add('hidden'); // Hide the full text
+        this.textContent = 'Read more'; // Change link text back
+    });
+});
 
     document.getElementById('statusFilter').addEventListener('change', function() {
         var selectedStatus = this.value;
@@ -435,7 +483,7 @@
         $('#customerNameFilter').on('input', function() {
             var filterValue = $(this).val().trim().toLowerCase();
 
-            $('.tb-parent > tr').each(function() {
+            $('.tb-parent > tr:nth-child(odd)').each(function() {
                 var customerName = $(this).find('.customer-name').text().trim().toLowerCase();
 
                 if (!filterValue || customerName.includes(filterValue)) {
@@ -449,7 +497,7 @@
         $('#orderFilter').on('input', function() {
             var filterValue = $(this).val().trim().toLowerCase();
 
-            $('.tb-parent > tr').each(function() {
+            $('.tb-parent > tr:nth-child(odd)').each(function() {
                 var orderName = $(this).find('.order-id').text().trim().toLowerCase();
 
                 if (!filterValue || orderName.includes(filterValue)) {
