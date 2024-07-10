@@ -353,19 +353,14 @@ app.post("/signup", (req, res, next) => { // Include 'next' here
 app.post('/updateOrder', async (req, res) => {
     const { orderId, comments, status } = req.body;
     try {
-        await Order.findOneAndUpdate(
+        const updatedOrder = await Order.findOneAndUpdate(
             { orderId: orderId },
-            {
-                $set: {
-                    orderNotes: comments,
-                    orderStatus: status,
-                }
-            }
+            { $set: { orderNotes: comments, orderStatus: status } },
+            { new: true }
         );
-        res.redirect('/dashboard');
+        res.json({ success: true, order: updatedOrder });
     } catch (error) {
-        console.error('Error updating order:', error);
-        res.status(500).send('Error updating order.');
+        res.status(500).json({ success: false, message: 'Error updating order.' });
     }
 });
 
@@ -433,4 +428,3 @@ app.get('/reset/:token', async (req, res) => {
 app.listen(process.env.PORT ||port, () => {
     console.log(`Server running on ${port}`)
 })
-

@@ -281,13 +281,13 @@
                                         <% orders.sort(function(a, b) {
                                             return a.dispatchDate - b.dispatchDate;
                                         }).forEach(function(order, index) { %>
-                                            <tr>
+                                            <tr data-order-id="<%= order.orderId %>">
                                                 <th scope="row" class="order-id"><a href="#"><u><%= order.orderId %></u></a></th>
                                                 <td class="customer-name"><%= order.customerName %></td>
                                                 <td><%= order.dispatchDate.getDate() %>/<%= order.dispatchDate.getMonth()+1 %>/<%= order.dispatchDate.getFullYear() %></td>
                                                 <td class="order-status"><%= order.orderStatus %></td>
                                                 <td style="position: relative;">
-                                                    <span class="full-text hidden"><%= order.orderNotes %></span>
+                                                    <span class="order-notes full-text hidden"><%= order.orderNotes %></span>
                                                     <a href="#" class="toggle-text">Read more</a>
                                                 </td>
                                                 <td>
@@ -300,7 +300,7 @@
                                             <!-- Notes and Parts Row -->
                                             <tr id="note<%= index %>" class="collapse note-section" >
                                                 <td colspan="6" style="background-color: lightblue;">
-                                                    <form action="/updateOrder" method="post">
+                                                    <form id="updateForm<%= index %>" class="updateOrderForm" action="/updateOrder" method="post">
                                                         <input type="hidden" name="orderId" value="<%= order.orderId %>">
                                                         <div class="container-fluid">
                                                             
@@ -393,7 +393,60 @@
         crossorigin="anonymous"></script>
 <script src="javascripts/header/header.js"></script>
 <script>
+    $(document).ready(function() {
+    // Handle form submission for update forms
+    $('.updateOrderForm').each(function() {
+        $(this).on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = $(this); // Cache the form element
+            const orderId = form.find('input[name="orderId"]').val(); // Extract orderId
+
+            $.ajax({
+                url: form.attr('action'), // Get the action attribute from the form
+                method: 'POST',
+                data: form.serialize(), // Serialize form data for submission
+                dataType: 'json', // Expect JSON response from server
+                beforeSend: function() {
+                    form.find('button[type="submit"]').attr('disabled', true); // Disable submit button
+                },
+                success: function(data) {
+                    if (data.success) {
+                        // Update the UI here if needed
+                        // Find the row with the specific order ID and update the status and notes
+                        const orderRow = $('.tb-parent').find(`tr[data-order-id="${orderId}"]`);
+                        orderRow.find('.order-status').text(data.order.orderStatus); // Update the status display
+                        orderRow.find('.order-notes').text(data.order.orderNotes); // Update the notes display
+                    } else {
+                        // Handle failure
+                        alert(data.message || 'Failed to update order.');
+                    }
+                    var allCollapses = document.querySelectorAll('.note-section');
+                    allCollapses.forEach(row => {
+                if (row.classList.contains('show')) {
+                    new bootstrap.Collapse(row, { toggle: false }).hide();
+                }
+            });
+                },
+                complete: function() {
+                    form.find('button[type="submit"]').attr('disabled', false); // Re-enable the submit button
+                }
+            });
+        });
+    });
+
+    // Additional scripts for UI interactions
+    // ...
+
+});
+</script>
+
+
+<script>
     document.addEventListener('DOMContentLoaded', function() {
+
+
+
     // Initialize all collapse components manually
     var allCollapses = document.querySelectorAll('.note-section');
     allCollapses.forEach(collapse => {
